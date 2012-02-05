@@ -15,7 +15,8 @@
 ###HOW TO READ
 Some descriptions inside this comment section represent structures abstractly, so as to generalize. This section describes how to read these representations.
 
->Things with **s around them represent a data type. These let you know that something of that data type belongs in that spot.
+>Bolded things represent a data type. These let you know that something of that data type belongs in that spot.
+
 >>**int** = integer  
 >>**+int** = positive integer  
 >>**-int** = negative integer  
@@ -32,7 +33,8 @@ Some descriptions inside this comment section represent structures abstractly, s
 >>**g-DVE`_`expr** = a generate DVE expression  
 >>**opts** = a hash-map of options  
 
->Things with **`<>`**s around them are used to modify placeholders, kind of like shorthands to more succinctly clarify what options can be inserted at that location.
+>Things with `<>`s around them are used to modify placeholders, kind of like shorthands to more succinctly clarify what options can be inserted at that location.
+
 >>**`<`etc...`>`** = repetition of prevous term--as well as any of its subsequent options--could be inserted here  
 >>**`<`data-type-1** *OR* **data-type2`>`** = either data-type-1 or data-type-2 could be inserted here
 
@@ -44,9 +46,12 @@ Some descriptions inside this comment section represent structures abstractly, s
 
 >###Options  
 >(setup  
+
 >>:generate-DVE`_`expr **g-DVE`_`expr**  
 >> :market  
+
 >>>{:starting  
+
 >>>>{:world-time **int**  
 >>>> :name **int**  
 >>>> :fleas **flea-map**}  
@@ -54,9 +59,13 @@ Some descriptions inside this comment section represent structures abstractly, s
 >>>> :duration **+int**}  
 
 >> :flea  
+
 >>>{:holdings  
+
 >>>>{:essential  
+
 >>>>>{**good**  
+
 >>>>>>{:starting **+int**  
 >>>>>> :use-rate **-int**  
 >>>>>> :death-below **int**}  
@@ -64,21 +73,27 @@ Some descriptions inside this comment section represent structures abstractly, s
 >>>>> **`<`etc...`>`**}}
   
 >>>> :luxury  
+
 >>>>>{**good**  
+
 >>>>>>{:starting **+int**}  
 
 >>>>> **`<`etc...`>`**}  
 
 >>>> :currency  
+
 >>>>>{**good**  
+
 >>>>>>{:starting **+int**}  
 
 >>>>> **`<`etc...`>`**}}  
 
 >> :transaction  
+
 >>>{:good-max **0`<`n`<`1**}  
 
 >>:output  
+
 >>>{:begin **text**  
 >>> :end **text**  
 >>> :break **text**}  
@@ -93,15 +108,21 @@ Some descriptions inside this comment section represent structures abstractly, s
 >A 'determine value expression' is an expression of a certain structure that the program will later expand into a function that takes two arguments, 'self' and 'good', and returns a number. Because of how the simulator works, this number abstractly represents the relative value of a given good for 'self'--a flea. This relative value, as its name might suggest, is only meaningful in relation to other relative values, specifically other relative values within the same flea. Inside of a 'determine value expression' you can use the following terms, which, for the sake of understanding, are like macros in that each one simplifies to a larger expression...
 
 >###Special terms
+
 >>`*`good`*`
+
 >>>This represents the current good at hand--the good that has been passed to the :determine-value function. The good whose relative value is being presently determined.
 
 >>`*`all-goods`*`
+
 >>>This is a collection of keywords, each representing the name of a good in the market.
 
 >>`*`information`*`
+
 >>>This is the 'information' that has been gathered by the current flea--'self'. It is a hash-map containing all the ratios of good-a for good-b that this flea has ever traded. It has the structure...
+
 >>>>{**good-a**
+
 >>>>>{**good-b** **ratio**
 >>>>> **`<`etc...`>`**}
 
@@ -110,26 +131,33 @@ Some descriptions inside this comment section represent structures abstractly, s
 >>>Repeated--denoted by `<`etc...`>`--for every combination of two goods.
 
 >>`*`holdings`*`
+
 >>>This is a hash-map of the current holdings of the flea at hand. A holdings map has the structure...
+
 >>>>{**good** **+int**  
 >>>> **`<`etc...`>`**}
 
 >>>Repeated--denoted by `<`etc...`>`--for every good in the current market. The integer here represents the amount of that good the flea 'owns'--so to speak.
 
 >>`*`relative-values`*`
+
 >>>This is a hash-map of the current relative-values of the flea at hand. A relative-values-map has the structure...
+
 >>>>{**good** **+int**  
 >>>> **`<`etc...`>`**}
 
 >>>Repeated--denoted by `<`etc...`>`--for every good in the current market. The integer here represents the value reterned by an extrapolation of the :determine-value_expr.
 
 >>`*`good-info-fn`*`
+
 >>>This is a function that, given another good, will return the most recent trade ratio of `*`good`*` to that good. I.e. it will call that from the information hash-map.
 
 >>`*`good-holding`*`
+
 >>>This is the amount of `*`good`*` held by the flea.
 
 >>`*`good-rel-val-fn`*`
+
 >>>This is a function that, given another good, will return the ratio of `*`good`*` to that good--in terms of their relative values from the relative values map.
 
 ---
@@ -139,16 +167,22 @@ Some descriptions inside this comment section represent structures abstractly, s
 >When calling, 'setup' you can pass an optional argument to it paired with :generate-DVE_expr. What is paired with this should be an expression that generates a DVE given a market. Read "What is a 'determine value expression'?" above for more details on that. This expression (that generates a DVE) also has some special options it can use, but in order to use them correctly, you must understand their structure. Inside the g-DVE expression, you can use the following terms, which, for the sake of understanding, are like macros in that each simplifies to a larger expression...
 
 >###Special terms
+
 >>`*`all-goods`*`
+
 >>>This is a collection of keywords, each representing the name of a good in the market.
 
 >>`*`world-time`*`
+
 >>>This is the current world time of the market.
 
 >>`*`fleas-map`*`
+
 >>>This is a map of the current fleas, in which [name flea] typifies each [key value] pair. A name is simply an int, unique to each flea. A flea is more complicated. In the context of the 'evolve-wrapper', a flea is a hash-map of structure...
+
 >>>>{:date-of-birth **+int**  
 >>>> :holdings
+
 >>>>>{**good** **+int**  
 >>>>> **`<`etc...`>`**}
 
@@ -157,7 +191,9 @@ Some descriptions inside this comment section represent structures abstractly, s
 >>>So `*`world-time`*` minus :date-of-birth would represent the age of a given flea. The :holdings simply contains how much of each good the flea has. The :determine-value`_`expr is a determine value expression and so can be mutated or recombined with other fleas' DVEs.
 
 >>`*`fleas-list`*`
+
 >>>Instead of a map of fleas, this is a list of the fleas. It is equivalent to (vals `*`fleas-map`*`). As such flea names are not present. This would be simpler to work with if the fleas' names do not matter for evolution.
 
 >>`*`all-determine-value-exprs`*`
+
 >>>This is a list of all the :determine-value exprs for all the current fleas. In other words, it is a list of available determine value expressions.
