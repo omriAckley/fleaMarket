@@ -1,6 +1,6 @@
 ###GENERAL NOTES
 
->This uses fleaMarket.simulator, which is set up speifically to be used from other namespaces. As such, there are some things to be aware of.
+>The gp namespace uses the simulator namespace, which is set up speifically to be used from other namespaces. As such, there are some things to be aware of.
 
 >First and foremost, you must call 'setup' before calling 'run'. The 'setup' function takes optional keyword arguments. Either way, setup will default to certain values--specified in fleaMarket.simulator--and will assoc-in values from the optional ones passed to it--or assoc-in nothing if no arguments are passed to it. Specifically for genetic programming, the keyword argument paired with :generate-DVE_expr is important. This must be passed an expression that expands to a function. This function should take a market and return a 'determine value expression'. This must be a quoted expression that will extrapolate to a flea's determine value function--more on that later. The program will do the extrapolating, you just need to be aware of what types of things can go into a determine value expression, and what it should return.
 
@@ -35,8 +35,8 @@ Some descriptions inside this comment section represent structures abstractly, s
 
 >Things with `<>`s around them are used to modify placeholders, kind of like shorthands to more succinctly clarify what options can be inserted at that location.
 
->>**`<`etc...`>`** = repetition of prevous term--as well as any of its subsequent options--could be inserted here  
->>**`<`data-type-1** *OR* **data-type2`>`** = either data-type-1 or data-type-2 could be inserted here
+>>`<`**etc...**`>` = repetition of prevous term--as well as any of its subsequent options--could be inserted here  
+>>`<`**data-type-1** *OR* **data-type2**`>` = either data-type-1 or data-type-2 could be inserted here
 
 ---
 
@@ -70,7 +70,7 @@ Some descriptions inside this comment section represent structures abstractly, s
 >>>>>> :use-rate **-int**  
 >>>>>> :death-below **int**}  
 
->>>>> **`<`etc...`>`**}}
+>>>>> `<`**etc...**`>`}}
   
 >>>> :luxury  
 
@@ -78,7 +78,7 @@ Some descriptions inside this comment section represent structures abstractly, s
 
 >>>>>>{:starting **+int**}  
 
->>>>> **`<`etc...`>`**}  
+>>>>> `<`**etc...**`>`}  
 
 >>>> :currency  
 
@@ -86,7 +86,7 @@ Some descriptions inside this comment section represent structures abstractly, s
 
 >>>>>>{:starting **+int**}  
 
->>>>> **`<`etc...`>`**}}  
+>>>>> `<`**etc...**`>`}}  
 
 >> :transaction  
 
@@ -98,8 +98,8 @@ Some descriptions inside this comment section represent structures abstractly, s
 >>> :end **text**  
 >>> :break **text**}  
 
->> **key** **`<`val** *OR* **opts`>`**  
->> **`<`etc...`>`**)
+>> **key** `<`**val** *OR* **opts**`>`  
+>> `<`**etc...**`>`)
 
 ---
 
@@ -124,9 +124,9 @@ Some descriptions inside this comment section represent structures abstractly, s
 >>>>{**good-a**
 
 >>>>>{**good-b** **ratio**
->>>>> **`<`etc...`>`**}
+>>>>> `<`**etc...**`>`}
 
->>>> **`<`etc...`>`**}
+>>>> `<`**etc...**`>`}
 
 >>>Repeated--denoted by `<`etc...`>`--for every combination of two goods.
 
@@ -135,7 +135,7 @@ Some descriptions inside this comment section represent structures abstractly, s
 >>>This is a hash-map of the current holdings of the flea at hand. A holdings map has the structure...
 
 >>>>{**good** **+int**  
->>>> **`<`etc...`>`**}
+>>>> `<`**etc...**`>`}
 
 >>>Repeated--denoted by `<`etc...`>`--for every good in the current market. The integer here represents the amount of that good the flea 'owns'--so to speak.
 
@@ -144,7 +144,7 @@ Some descriptions inside this comment section represent structures abstractly, s
 >>>This is a hash-map of the current relative-values of the flea at hand. A relative-values-map has the structure...
 
 >>>>{**good** **+int**  
->>>> **`<`etc...`>`**}
+>>>> `<`**etc...**`>`}
 
 >>>Repeated--denoted by `<`etc...`>`--for every good in the current market. The integer here represents the value reterned by an extrapolation of the :determine-value_expr.
 
@@ -184,7 +184,7 @@ Some descriptions inside this comment section represent structures abstractly, s
 >>>> :holdings
 
 >>>>>{**good** **+int**  
->>>>> **`<`etc...`>`**}
+>>>>> `<`**etc...**`>`}
 
 >>>> :determine-value_expr **DVE**}
 
