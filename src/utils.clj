@@ -138,7 +138,7 @@
   (Math/abs (apply - args)))
 
 (defn ave
-  "Returns the average of the numbers passed to it."
+  "Returns the average of the collection of numbers passed to it."
   [coll]
   (/ (reduce + coll) (count coll)))
 

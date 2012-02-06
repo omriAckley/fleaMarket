@@ -3,6 +3,7 @@
     [utils :only (Map
                    Function
                    any?
+                   abs
                    geometric-mean
                    inverse
                    pd
@@ -232,7 +233,7 @@
               :information (into {}
                                  (map (fn [good]
                                         [good (zipmap (remove #{good} @all-goods)
-                                                      (repeat {}))])
+                                                      (repeat nil))])
                                       @all-goods))
               :holdings (apply assoc (zipmap @all-goods (repeat 0))
                                (->> @settings
@@ -248,7 +249,7 @@
          (assoc-in % [:fleas (% :name)] flea))))
 
 (defn determine-relative-values
-  "Given a flea, returns a new flea, with :relative-values updated by calling that flea's determine-value function on each good."
+  "Given a flea, returns a new flea, with :relative-values updated by calling that flea's determine-value_expr on each good."
   [flea]
   (let [determine-value (wrapper_determine-value
                           (flea :determine-value_expr))]
@@ -256,9 +257,9 @@
            (reduce (fn [rel-vals good]
                      (assoc rel-vals
                             good
-                            (determine-value
-                              flea
-                              good)))
+                            (abs (determine-value
+                                   flea
+                                   good))))
                    (flea :relative-values)
                    @all-goods))))
 
@@ -493,7 +494,9 @@
              size
              (dec duration)))))
 
-(def *final-market* (atom nil))
+(def starting-market (atom nil))
+
+(def final-market (atom nil))
 
 (defn _run
   "This is wrapper for the simulation. It takes keyword arguments (for :duration, :size, and :market), with defaults for each (taken from 'settings'). It also uses error-cond to only allow proper arguments to result in a simulation. Finally, it prints starting and ending messages for a simulation."
@@ -517,14 +520,15 @@
       (not (start-market :name)) "Market must have :name entry."
       :no-errors (do
                    (println)
-                   (when demo?
+                   (reset! starting-market start-market)
+                   (when @demo?
                      (println (-> @settings :output :break))
                      (println "**DEMO**")
                      (Thread/sleep 1000))
                    (println (-> @settings :output :break))
                    (println (-> @settings :output :begin))
                    (println (-> @settings :output :break))
-                   (reset! *final-market*
+                   (reset! final-market
                            (simulation start-market (int size) (int duration)))
                    (println (-> @settings :output :end))
                    (println (-> @settings :output :break))))))
