@@ -1,4 +1,4 @@
-(ns fun)
+(ns belt.fun)
 
 (declare fibs)
 

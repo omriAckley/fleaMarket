@@ -10,7 +10,8 @@
         belt.general-utils
         belt.hash-maps
         belt.jacked-def
-        belt.math))
+        belt.math
+        belt.probability))
 
 (def clan1 (clan :size 10 :generate-DVE_expr ''(pd 100 *good-holding*)))
 

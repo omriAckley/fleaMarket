@@ -1,4 +1,4 @@
-(ns probability
+(ns belt.probability
   (:use [belt.hash-maps :only [update-all]]
         [belt.math :only [+-
                      sum]]))

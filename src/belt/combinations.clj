@@ -1,4 +1,4 @@
-(ns combinations)
+(ns belt.combinations)
 
 (defn all-unique-pairs
   "Given a collection, returns a list of all the unique pairs of the elements in the collection."

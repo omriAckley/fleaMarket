@@ -1,4 +1,4 @@
-(ns hash-maps)
+(ns belt.hash-maps)
 
 (defn assoc-all
   "Changes all the values in a hash-map to val."

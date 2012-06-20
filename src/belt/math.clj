@@ -1,4 +1,4 @@
-(ns math
+(ns belt.math
   (:use [belt.general-utils :only [<?
                               unless]]))
 

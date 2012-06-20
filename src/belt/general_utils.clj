@@ -1,4 +1,4 @@
-(ns general-utils
+(ns belt.general-utils
   (:use clojure.walk)
   (:require [clojure.string :as s :only [blank?]]
             [clojure.zip :as z]))

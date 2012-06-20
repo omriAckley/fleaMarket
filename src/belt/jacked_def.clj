@@ -1,4 +1,4 @@
-(ns jacked-def
+(ns belt.jacked-def
   (:use [clojure.walk]
         [belt.general-utils :only [count=?
                               merge-meta>
@@ -281,13 +281,13 @@
                                 remove-hidden)))
                         preprocessed-bindings)))
 
-(comment *THINGS TO CHANGE ABOUT def-new*
+(comment "*THINGS TO CHANGE ABOUT def-new*
          -Bug: (def-new test-thing [:arg])
          -Bug: (def-new test-thing [:arg (fn [x] x)])
          -Assertions!
          -Transients should not have to be refs, but rather should consider any first-level refs within them to be transient (maybe).
          -Metadata :arglists should sort to put required args first, including args that have nested requires within them
-         -Fix it so that throws (for :required issues) tell you more than local information (i.e. if it says that :x is required, also say what :x is a sub-argument of--if anything))
+         -Fix it so that throws (for :required issues) tell you more than local information (i.e. if it says that :x is required, also say what :x is a sub-argument of--if anything)")
 (defmacro def-new
   "Defines a new type of hash-map that takes :key value argument style, with some arguments required and others optional--in which case they must have a default value. Additionally, transient arguments (tagged with ^:transient metadata), must be refs, and can be reset to their base values by calling 'transients-to-base-values'."
   {:arglists '([name doc-string? attr-map? [key value?]*])}

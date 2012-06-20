@@ -1,4 +1,4 @@
-(ns collections
+(ns belt.collections
   (:use [clojure.walk]
         [belt.general-utils :only [List
                               Map
