@@ -4,7 +4,9 @@
         markets
         [belt.math :only [pd]]
         [belt.hash-maps :only [remove-hash-map]]
-        [belt.collections :only [most]]))
+        [belt.collections :only [most
+                                 append]]
+        [belt.general-utils :only [append-to-file]]))
 
 
 
@@ -39,15 +41,30 @@
       (println "    Strategy:" (oldest-flea :determine-value_expr))))
   (println (output :break)))
 
+(defn spit-stats
+  [file-name time-step]
+  (->> (for [[_ clan] (*market* :clan-map)]
+         (str @(clan :death-count) "\t\t"))
+       (cons (str time-step "\t\t"))
+       (append "\r\n")
+       (apply str)
+       (append-to-file file-name)))
+
 (def initial-market (atom nil))
 (def final-market (atom nil))
 
 (defn run-simulation
-  [duration market]
+  [duration market spit-file]
   (println)
   (println (output :break))
   (println (output :begin))
   (println (output :break))
+  (->> (for [[clan-name _] (market :clan-map)]
+         (str clan-name "\t\t"))
+       (cons (str "time-step" "\t\t"))
+       (append "\r\n")
+       (apply str)
+       (append-to-file spit-file))
   (binding [*market* market]
     (reset! initial-market *market*)
     (do-all-repopulations)
@@ -61,6 +78,8 @@
       (do-all-repopulations)
       (do-all-redistributions)
       (print-stats (inc time-step) duration)
+      (spit-stats spit-file
+                  (inc time-step))
       (reset-all-transients))
     (reset! final-market *market*))
   (println (output :end))

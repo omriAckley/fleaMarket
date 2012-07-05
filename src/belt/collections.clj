@@ -21,9 +21,9 @@
     from))
 
 (defn append
-  "Return coll with n concat-ed onto the end."
-  [coll n]
-  (concat coll [n]))
+  "Return coll with x concat-ed onto the end."
+  [x coll]
+  (concat coll [x]))
 
 (defn coll-zip
   "Given a root, outputs a generic zipper that will maintain nested types."

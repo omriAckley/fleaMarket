@@ -76,9 +76,33 @@
 
 (defn standard-trade-group-manager
   []
-  (if (-> @(*market* :age)
-          (mod 10)
-          zero?)
+  (partition 2
+             (shuffle (mapcat (fn [clan-name]
+                                (->> (get-clan clan-name)
+                                     :fleas
+                                     deref
+                                     keys
+                                     (map list (repeat clan-name))))
+                              (*market* :clan-names)))))
+
+(defn standard-reproduction-manager
+  [clan-name]
+  (map list
+       (repeat clan-name)
+       (keys @((get-clan clan-name) :fleas))))
+
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;Prebaked possibilities
+
+(defn in:all-1:9-trade-group-manager
+  []
+  (if-not (-> @(*market* :age)
+              (mod 10)
+              zero?)
     (partition 2
                (shuffle (mapcat (fn [clan-name]
                                   (->> (get-clan clan-name)
@@ -96,9 +120,3 @@
                    (map list (repeat clan-name))
                    (partition 2)))
             (*market* :clan-names))))
-
-(defn standard-reproduction-manager
-  [clan-name]
-  (map list
-       (repeat clan-name)
-       (keys @((get-clan clan-name) :fleas))))

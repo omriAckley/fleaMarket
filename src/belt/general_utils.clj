@@ -61,6 +61,11 @@
 
 (def any-pred some-fn)
 
+(defn append-to-file
+  "Spits to a file, appending s onto the end."
+  [file-name s]
+  (spit file-name s :append true))
+
 (defn atom?
   "Returns true if the passed object is an atom."
   [obj]

@@ -84,8 +84,8 @@
         flea-B-amount (pd flea-A-amount trade-rate)
         [flea-A-amount_int
          flea-B-amount_int] (unless #(some zero? %)
-                                    [(Math/round flea-A-amount)
-                                     (Math/round flea-B-amount)]
+                                    [(Math/round (float flea-A-amount))
+                                     (Math/round (float flea-B-amount))]
                                     [0 0])]
     (alter (-> flea-A :holdings good-A)
            - flea-A-amount_int)
